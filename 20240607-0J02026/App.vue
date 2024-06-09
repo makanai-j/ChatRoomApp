@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import AlertSeal from './components/UiParts/AlertSeal.vue'
 //import Home from './components/Pages/Home.vue'
 //import GateWayTest from './components/Pages/GateWayTest.vue'
+import Home from './components/Pages/Home.vue'
 </script>
 <template>
-  <AlertSeal></AlertSeal>
   <router-view />
 </template>
 

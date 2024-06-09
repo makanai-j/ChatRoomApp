@@ -1,0 +1,8 @@
+button {
+    border: none;
+    outline: none;
+    border-radius: 0px;
+}
+:root {
+    --show-add-button-height: 33px;
+}

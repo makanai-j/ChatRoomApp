@@ -21,24 +21,22 @@ const reaction: reaction = props.reaction as reaction
 .info-container {
   padding: 15px;
   text-align: left;
-  max-width: 500px;
+  max-width: 400px;
 }
 .top-info {
+  height: 17px;
   display: flex;
 }
 .top-item {
+  height: 13px;
   padding: 2px 6px;
 }
 .name {
-  width: calc(100% - 100px);
   font-size: 13px;
 }
 .time {
-  width: 100px;
-  height: 17px;
+  height: 11px;
   padding: 4px 6px 2px;
-  margin-left: auto;
-  margin-right: 0px;
   font-size: 11px;
 }
 .text {
