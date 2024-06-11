@@ -1,6 +1,6 @@
 export class AwsComponent {
-  private static httpApiURL = ''
-  private static websocketApiURL = ''
+  private static httpApiURL = 'https://5x72bvyoqk.execute-api.us-west-2.amazonaws.com'
+  private static websocketApiURL = 'wss://74jxj0s66a.execute-api.us-west-2.amazonaws.com/production/'
 
   static getHttpApiURL = (
     rote: '/room' | '/leave' | '/section' | '/reaction' | '/ownercheck',

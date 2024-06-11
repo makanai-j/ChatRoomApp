@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import HashStr from '../Plugins/Hash11'
 import FormChangeButton from '../UiParts/FormChangeButton.vue'
 import { RoomUtil } from '../Models/RoomUtil'
+import { xssNl2br } from '../Plugins/xssNl2br'
 
 const roomID = ref('')
 const roomName = ref('')
@@ -19,16 +20,16 @@ const goRoom = () => {
     router.push({
       name: 'ChatRoom',
       params: {
-        id: roomID.value,
+        id: xssNl2br(roomID.value),
       },
     })
   } else {
-    RoomUtil.roomName = roomName.value
+    RoomUtil.roomName = xssNl2br(roomName.value)
     router.push({
       name: 'ChatRoomOwner',
       params: {
-        id: roomID.value,
-        checkCode: HashStr.randCode(),
+        id: xssNl2br(roomID.value),
+        checkCode: xssNl2br(HashStr.randCode()),
       },
     })
   }

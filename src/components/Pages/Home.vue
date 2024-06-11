@@ -9,6 +9,7 @@ import { WebSocketController } from '../Models/WebsocketController'
 import { RoomUtil } from '../Models/RoomUtil'
 import UserUtil from '../Models/UserUtil'
 import { AlertManager } from '../Models/AlertModalManager'
+import { xssNl2br } from '../Plugins/xssNl2br'
 
 const isLoading = ref(false)
 const isAllowedToRoom = ref(false)
@@ -18,12 +19,13 @@ const route = useRoute()
 let isAllowed: boolean = false
 WebSocketController.open(async () => {
   let name: string = ''
-  let checkCode: string | null = typeof route.params.checkCode == 'string' ? route.params.checkCode : null
-  if (checkCode && typeof route.params.id == 'string' && RoomUtil.roomName) {
-    isAllowed = await RoomUtil.create(route.params.id, null, checkCode)
+  const roomID: string | null = typeof route.params.id == 'string' ? xssNl2br(route.params.id) : null
+  const checkCode: string | null = typeof route.params.checkCode == 'string' ? xssNl2br(route.params.checkCode) : null
+  if (checkCode && roomID && RoomUtil.roomName) {
+    isAllowed = await RoomUtil.create(roomID, null, checkCode)
     name = 'このルームを作った人'
-  } else if (typeof route.params.id == 'string') {
-    isAllowed = await RoomUtil.enter(route.params.id, null, checkCode)
+  } else if (roomID) {
+    isAllowed = await RoomUtil.enter(roomID, null, checkCode)
     name = 'このルームに入ってきた人'
   }
   if (isAllowed) {

@@ -1,9 +1,22 @@
-# Vue 3 + TypeScript + Vite
+# 匿名のチャットアプリ
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+### 概要
 
-## Recommended Setup
+掲示板のような匿名性と、チャットアプリのような閉鎖的な環境をかかわせたアプリ。
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+### 使用方
 
-- Use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) for performing the same type checking from the command line, or for generating d.ts files for SFCs.
+1. [入室用ページ](http://chat-room-bucket.s3-website-us-west-2.amazonaws.com/)にアクセスし、入るか作るを選択します。
+2. **入る**場合は部屋番号を、**作る**場合は部屋の名前を入力します。
+3. 入室後はセクションを選んでリアクションを送るだけです。
+
+### 仕様
+
+- 部屋のオーナーとゲストの違いはセクションが作れるかどうかだけです。
+- 部屋番や部屋の名前、管理者コードは変更不可
+- セクションやリアクションは編集不可
+- xss対策はしているが、HTMLescapeはしていないので、`<strong>`等の強調構文は反映される。
+
+### License
+
+**MIT License**
