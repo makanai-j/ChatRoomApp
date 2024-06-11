@@ -3,7 +3,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import AutoReseizeTextarea from './AutoResizeTextarea.vue'
 import { RoomUtil } from '../Models/RoomUtil'
 import { ReaSecUtil } from '../Models/ReaSecUtil'
-import { AlertManager } from '../Models/AlertManager'
+import { AlertManager } from '../Models/AlertModalManager'
 import HashStr from '../Plugins/Hash11'
 
 const emit = defineEmits<{
@@ -33,7 +33,7 @@ const sendReaction = () => {
   if (ReaSecUtil.selectedSection.value == null) {
     AlertManager.text = 'セクションを選択してください'
   } else if (checkText.value && RoomUtil.roomID) {
-    const rID = HashStr.randCode(16)
+    const rID = HashStr.randCode(12)
     ReaSecUtil.sendReaction(text.value, RoomUtil.roomID, ReaSecUtil.selectedSection.value, null, rID)
     textarea.value?.resetText()
     ReaSecUtil.reactionForScroll.value = null

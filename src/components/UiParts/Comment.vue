@@ -1,25 +1,35 @@
 <script setup lang="ts">
 import { xssNl2br } from '../Plugins/xssNl2br'
 import formatDate from '../Plugins/FormatDate'
+import { ref } from 'vue'
 const props = defineProps({
   reaction: { type: Object, required: true },
 })
 const reaction: reaction = props.reaction as reaction
+
+const replyField = ref<HTMLButtonElement | null>(null)
 </script>
 
 <template>
   <div class="info-container">
     <div class="top-info">
       <p class="top-item name">{{ reaction.nickname }}</p>
-      <p class="top-item time">{{ formatDate(reaction.sentDate) }}</p>
+      <div>
+        <p class="top-item time">{{ formatDate(reaction.sentDate) }}</p>
+        <p class="reaction-id">{{ reaction.reactionID }}</p>
+      </div>
     </div>
-    <p class="text" v-html="xssNl2br(reaction.text).replace('\n', '<br>')"></p>
+    <div class="comment-text-flex">
+      <p class="text" v-html="xssNl2br(reaction.text).replace('\n', '<br>')"></p>
+      <button v-if="false" class="reply" ref="replyField"></button>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .info-container {
-  padding: 15px;
+  --reply-button-width: 25px;
+  padding: 8px;
   text-align: left;
   max-width: 500px;
 }
@@ -30,23 +40,42 @@ const reaction: reaction = props.reaction as reaction
   padding: 2px 6px;
 }
 .name {
-  width: calc(100% - 100px);
-  font-size: 13px;
+  font-size: 0.7em;
 }
-.time {
-  width: 100px;
-  height: 17px;
-  padding: 4px 6px 2px;
+.top-info div {
+  display: flex;
+  padding: 2px;
   margin-left: auto;
   margin-right: 0px;
-  font-size: 11px;
+}
+.time {
+  width: 100%;
+  padding: 0px;
+  margin-right: 7px;
+  font-size: 0.6em;
+}
+.reaction-id {
+  font-size: 0.6em;
+  font-weight: 300;
+  text-align: right;
+}
+.comment-text-flex {
+  display: flex;
 }
 .text {
+  width: 100%;
   background-color: #8885;
-  font-size: 14px;
-  padding: 10px;
-  margin: 10px;
-  margin-left: 15px;
-  line-height: 1.8em;
+  padding: 6px;
+  font-size: 0.8em;
+  line-height: 1.4;
+}
+.reply {
+  width: var(--reply-button-width);
+  background-color: #666;
+  border: none;
+  outline: none;
+}
+.reply:hover {
+  background-color: #36fd;
 }
 </style>

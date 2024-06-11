@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import OwnerCheckModal from './OwnerCheckModal.vue'
+import OwnerCheckModal from './Modals/OwnerCheckModal.vue'
 import { RoomUtil } from '../Models/RoomUtil'
 import UserUtil from '../Models/UserUtil'
 

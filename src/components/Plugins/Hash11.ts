@@ -20,7 +20,6 @@ class HashStr {
       }
 
       let hashNum = Number('0x' + fnv.fast1a64(value))
-      console.log(hashNum)
 
       while (hashNum >= baseNum) {
         const remainder = hashNum % baseNum

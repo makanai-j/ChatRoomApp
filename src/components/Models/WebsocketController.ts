@@ -1,5 +1,5 @@
 import { AwsComponent } from '../config/AwsComponet'
-import { RoomUtil } from './RoomUtil'
+import { ModalManager } from './AlertModalManager'
 
 export class WebSocketController {
   private static socket: WebSocket | null = null
@@ -7,16 +7,13 @@ export class WebSocketController {
   static open(onopenFunc: (ev: Event) => void): void {
     WebSocketController.socket = new WebSocket(AwsComponent.getWebSocketApiURL())
     WebSocketController.socket.onopen = onopenFunc
-    WebSocketController.socket.onmessage = (ev) => {
-      console.log(ev)
-    }
   }
 
   static setOnmessage(func: (message: MessageEvent<any>) => void): void {
     if (WebSocketController.socket) {
       WebSocketController.socket.onmessage = func
-      WebSocketController.socket.onerror = (ev) => {
-        console.log(ev)
+      WebSocketController.socket.onerror = () => {
+        ModalManager.isShownErrorText.value = true
       }
     }
   }
@@ -31,11 +28,8 @@ export class WebSocketController {
   static send(json: userRote | reactionRote | roomRote | sectionRote): void {
     if (WebSocketController.isOpen()) {
       WebSocketController.socket!.send(JSON.stringify(json))
-    } else if (WebSocketController.socket) {
-      WebSocketController.open(async () => {
-        if (!(await RoomUtil.reEnter())) return
-        WebSocketController.socket!.send(JSON.stringify(json))
-      })
+    } else {
+      ModalManager.isShownErrorText.value = true
     }
   }
 

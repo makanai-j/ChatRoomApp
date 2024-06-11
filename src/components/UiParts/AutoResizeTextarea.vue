@@ -20,7 +20,12 @@ defineExpose({
 <template>
   <div class="FlexTextarea">
     <div class="FlexTextarea__dummy" aria-hidden="true" ref="textarea">{{ text }}</div>
-    <textarea id="FlexTextarea" class="FlexTextarea__textarea" v-model="text"></textarea>
+    <textarea
+      id="FlexTextarea"
+      class="FlexTextarea__textarea"
+      v-model="text"
+      placeholder="リアクションを入力"
+    ></textarea>
   </div>
 </template>
 <style scoped>

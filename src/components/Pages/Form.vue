@@ -23,7 +23,6 @@ const goRoom = () => {
       },
     })
   } else {
-    console.log('create')
     RoomUtil.roomName = roomName.value
     router.push({
       name: 'ChatRoomOwner',

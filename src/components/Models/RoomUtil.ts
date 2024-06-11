@@ -1,6 +1,7 @@
 import { reactive } from 'vue'
 import { httpRoute } from '../config/AwsComponet'
 import { WebSocketController } from './WebsocketController'
+import { ModalManager } from './AlertModalManager'
 
 export class RoomUtil {
   static ownerCheckCode: { value: string | null } = reactive({ value: null })
@@ -30,7 +31,6 @@ export class RoomUtil {
         return response.json()
       })
       .then((data) => {
-        console.log(data)
         if (data.isAllowed) {
           WebSocketController.send({
             action: 'room',
@@ -64,7 +64,6 @@ export class RoomUtil {
         return response.json()
       })
       .then((data) => {
-        console.log(data)
         if (data.isAllowed) {
           RoomUtil.roomID = data.roomID
           RoomUtil.roomName = data.roomName
@@ -117,10 +116,8 @@ export class RoomUtil {
       })
       .then((data) => {
         if (data.isOwner) {
-          console.log(data)
           return true
         }
-        console.log(data)
         return false
       })
   }

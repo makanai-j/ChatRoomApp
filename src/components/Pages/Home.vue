@@ -8,7 +8,7 @@ import SectionArea from '../UiParts/SectionArea.vue'
 import { WebSocketController } from '../Models/WebsocketController'
 import { RoomUtil } from '../Models/RoomUtil'
 import UserUtil from '../Models/UserUtil'
-import { AlertManager } from '../Models/AlertManager'
+import { AlertManager } from '../Models/AlertModalManager'
 
 const isLoading = ref(false)
 const isAllowedToRoom = ref(false)

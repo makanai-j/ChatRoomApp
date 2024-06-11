@@ -13,3 +13,6 @@ export class AlertManager {
     return AlertManager._text.value
   }
 }
+export class ModalManager {
+  static isShownErrorText: { value: boolean } = reactive({ value: false })
+}

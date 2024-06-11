@@ -11,7 +11,6 @@ import { RoomUtil } from '../Models/RoomUtil'
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
 ReaSecUtil.init(RoomUtil.roomID, () => {
-  console.log('sss')
   if (ReaSecUtil.sections.value.length > 0) {
     const sID = ReaSecUtil.sortedSections.value[ReaSecUtil.sections.value.length - 1].sectionID
     scrollTargetY(sID, 'top')
@@ -20,13 +19,11 @@ ReaSecUtil.init(RoomUtil.roomID, () => {
 
 watch(ReaSecUtil.sectionForScroll, () => {
   if (ReaSecUtil.sectionForScroll.value) {
-    console.log('s sc')
     scrollTargetY(ReaSecUtil.sectionForScroll.value, 'top', 0.3)
   }
 })
 watch(ReaSecUtil.reactionForScroll, () => {
   if (ReaSecUtil.reactionForScroll.value) {
-    console.log('r sc')
     const rID = ReaSecUtil.reactionForScroll.value
     setTimeout(() => {
       scrollTargetY(rID, 'bottom', 0.3)
@@ -112,6 +109,8 @@ const reactionSBysectio = (sectionID: string) => {
   padding: 0px;
 }
 .section-title {
+  position: sticky;
+  top: 0;
   width: 90%;
   text-align: center;
   font-size: 0.8em;

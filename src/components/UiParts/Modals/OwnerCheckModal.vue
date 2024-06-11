@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { RoomUtil } from '../Models/RoomUtil'
+import { RoomUtil } from '../../Models/RoomUtil'
 import { useRouter } from 'vue-router'
-import { AlertManager } from '../Models/AlertManager'
+import { AlertManager } from '../../Models/AlertModalManager'
 
 const emit = defineEmits<{
   (e: 'toggleIsShown'): void
 }>()
+
+const isLoading = ref(false)
 
 const router = useRouter()
 
@@ -15,7 +17,7 @@ const ownerCheckCodeField = ref<HTMLInputElement | null>(null)
 
 const checkOwner = async () => {
   ownerCheckCodeField.value?.blur()
-  if (RoomUtil.ownerCheckCode.value == ownerCheckCode.value) return
+  isLoading.value = true
   if (await RoomUtil.checkOwner(ownerCheckCode.value)) {
     AlertManager.text = '成功しました'
     router.push({
@@ -27,8 +29,10 @@ const checkOwner = async () => {
     })
     RoomUtil.ownerCheckCode.value = ownerCheckCode.value
     emit('toggleIsShown')
+    isLoading.value = false
   } else {
     AlertManager.text = '失敗しました'
+    isLoading.value = false
   }
 }
 </script>
@@ -47,8 +51,14 @@ const checkOwner = async () => {
         placeholder="コード"
       />
     </div>
-    <button class="complete" @click="checkOwner">確認</button>
-    <button class="cancel" @click="$emit('toggleIsShown')">キャンセル</button>
+    <button
+      :class="['complete', isLoading ? 'is-loading' : 'is-not-loading']"
+      @click="checkOwner"
+      :disabled="isLoading"
+    >
+      {{ isLoading ? '確認しています' : '確認' }}
+    </button>
+    <button class="cancel" @click="$emit('toggleIsShown')" :disabled="isLoading">キャンセル</button>
   </div>
 </template>
 <style scoped>
@@ -86,6 +96,12 @@ const checkOwner = async () => {
   margin: 8px 0px;
   padding: 3px;
   font-weight: 500;
+}
+.is-loading {
+  background-color: #ccc;
+  color: #999;
+}
+.is-not-loading {
   background-color: #14be;
   color: #eee;
 }

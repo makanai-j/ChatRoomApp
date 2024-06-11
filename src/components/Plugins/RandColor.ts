@@ -3,6 +3,5 @@ export const randColor = (): string => {
   color += Math.floor(Math.random() * 10 + 2).toString(16)
   color += Math.floor(Math.random() * 10 + 2).toString(16)
   color += Math.floor(Math.random() * 10 + 5).toString(16)
-  console.log(color)
   return color
 }

@@ -1,4 +1,4 @@
-import { ComputedRef, computed, toValue } from 'vue'
+import { ComputedRef, computed } from 'vue'
 import { WebSocketController } from './WebsocketController'
 import { httpRoute } from '../config/AwsComponet'
 import HashStr from '../Plugins/Hash11'
@@ -7,6 +7,7 @@ import { reactive } from 'vue'
 import UserUtil from './UserUtil'
 import { RoomUtil } from './RoomUtil'
 import { randColor } from '../Plugins/RandColor'
+import { ModalManager } from './AlertModalManager'
 /// import * as uuid from 'uuid'
 /// なんでimportできんのんや！！　タコ！！
 export class ReaSecUtil {
@@ -21,6 +22,9 @@ export class ReaSecUtil {
       let json = JSON.parse(message.data)
       if (Validate.validateReaction(json)) {
         ReaSecUtil.reactions.value.push(json)
+        if (ReaSecUtil.selectedSection.value && ReaSecUtil.selectedSection.value == json.sectionID) {
+          ReaSecUtil.reactionForScroll.value = json.reactionID
+        }
       } else if (Validate.validateSection(json)) {
         ReaSecUtil.sections.value.push(json)
       }
@@ -40,17 +44,15 @@ export class ReaSecUtil {
         return response.json()
       })
       .then((data) => {
-        console.log(data)
         if (data.reactions.length > 0 && Validate.validateReaction(data.reactions[0])) {
           ReaSecUtil.reactions.value = data.reactions
         }
         if (data.sections.length > 0 && Validate.validateSection(data.sections[0])) {
-          console.log(data.sections)
           ReaSecUtil.sections.value = data.sections
         }
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
+        ModalManager.isShownErrorText.value = true
       })
   }
 
@@ -71,9 +73,8 @@ export class ReaSecUtil {
     roomID: string,
     sectionID: string | null,
     sourceReactionID: string | null = null,
-    reactionID: string = HashStr.randCode(16),
+    reactionID: string = HashStr.randCode(12),
   ): void {
-    console.log('send reaction')
     const rRote: reactionRote = {
       action: 'reaction',
       reactionID: reactionID,

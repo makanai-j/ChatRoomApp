@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AlertManager } from '../Models/AlertManager'
+import { AlertManager } from '../Models/AlertModalManager'
 </script>
 <template>
   <div>

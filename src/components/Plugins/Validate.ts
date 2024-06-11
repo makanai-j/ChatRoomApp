@@ -1,12 +1,6 @@
 export class Validate {
   static validateReaction = (target: any): target is reaction => {
-    if (!(typeof target === 'object')) {
-      console.log('not object')
-    } else if (!('roomID' in target)) {
-      console.log('not roomID')
-    } else if (!('reactionID' in target)) {
-      console.log('not reactionID')
-    } else {
+    if (typeof target === 'object' && 'roomID' in target && 'reactionID' in target) {
       return true
     }
     return false
@@ -26,7 +20,6 @@ export class Validate {
     */
     if (typeof target !== 'object') return false
     else if (!('sectionID' in target)) {
-      console.log('not sectionID')
       return false
     }
     return true
